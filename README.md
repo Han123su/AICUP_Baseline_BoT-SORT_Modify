@@ -5,7 +5,7 @@
 
 # Package Version
 ## 在環境的套件配置上，本次參賽使用的 package version 如下
-python==3.9.7
+python==3.7.12
 
 torch==1.13.1
 
@@ -69,7 +69,7 @@ tensorboard --logdir=<程式碼路徑>/AICUP_Baseline_BoT-SORT/runs/train/yolov7
 ```shell
 bash tools/track_all_timestamps.sh --weights runs/train/yolov7-AICUP/weights/best.pt --source-dir /data/NAS/ComputeServer/slicepaste/AI_CUP/train/images/<timestamp> --device 0 --fast-reid-config fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --fast-reid-weights logs/<資料夾>/bagtricks_R50-ibn/model_00<第幾個>.pth
 ```
-tracking結果路徑: `<程式碼路徑>/AICUP_Baseline_BoT-SORT/runs/detect/<timestamp>`
+tracking 結果路徑: `<程式碼路徑>/AICUP_Baseline_BoT-SORT/runs/detect/<timestamp>`
 
 到此步驟便可產生 Bot-SORT Tracking 的 txt
 
