@@ -1,5 +1,5 @@
 # AICUP baseline
-* ###本次README.md 參考自 README(original).md
+* ### 本次 README.md 參考自 README(original).md
 
 	Reference: (https://github.com/ricky-696/AICUP_Baseline_BoT-SORT)
 
@@ -24,33 +24,30 @@ opencv-python==4.9.0.80
 wheel==0.41.2
 
 # REID: 提取特徵，不會做下游任務 (query、gallery)
-## 在REID階段需動到的檔案路徑
+## 在 REID 階段需動到的檔案路徑
 bagtricks_R50-ibn.yml 超參數:
 `<程式碼路徑>/AICUP_Baseline_BoT-SORT/fast_reid/configs/AICUP/`
 
 Base-bagtricks.yml 被繼承的檔案:`<程式碼路徑>/AICUP_Baseline_BoT-SORT/fast_reid/configs/`
 
-default.py 其呼叫的檔案:
-`<程式碼路徑>/AICUP_Baseline_BoT-SORT/fast_reid/fastreid/config/`
+default.py 其呼叫的檔案: `<程式碼路徑>/AICUP_Baseline_BoT-SORT/fast_reid/fastreid/config/`
+
 ---
-* 跑training(用2顆GPU)
+* ### 跑training (用 2 顆 GPU)
 ```shell
 CUDA_VISIBLE_DEVICES='0,1' python3 fast_reid/tools/train_net.py --config-file fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --num-gpus 4
 ```
-* 跑完之後可以使用tensorboard視覺化，可open in browser
+* ### 跑完之後可以使用 tensorboard 視覺化，可 open in browser
 ```shell
 tensorboard --logdir=<程式碼路徑>/AICUP_Baseline_BoT-SORT/logs/<你的資料夾>/bagtricks_R50-ibn/
 ```
 	
 # YOLO v7 -> 物件偵測
-AI_CUP.yml 檔案路徑:
-`<程式碼路徑>/AICUP_Baseline_BoT-SORT/yolov7/data/`
+AI_CUP.yml 檔案路徑: `<程式碼路徑>/AICUP_Baseline_BoT-SORT/yolov7/data/`
 
-改yolo架構 yolov7-AICUP.yaml 檔案路徑:
-`<程式碼路徑>/AICUP_Baseline_BoT-SORT/yolov7/cfg/training/`
+改yolo架構 yolov7-AICUP.yaml 檔案路徑: `<程式碼路徑>/AICUP_Baseline_BoT-SORT/yolov7/cfg/training/`
 
-超參數 hyp.scratch.custom.yaml 檔案路徑:
-`<程式碼路徑>/AICUP_Baseline_BoT-SORT/yolov7/data/`
+超參數 hyp.scratch.custom.yaml 檔案路徑: `<程式碼路徑>/AICUP_Baseline_BoT-SORT/yolov7/data/`
 	
 * ### 跑 training (看用幾顆 GPU)
 
@@ -62,7 +59,7 @@ python yolov7/train.py --device 0 --batch-size 8 --epochs 50 --data yolov7/data/
 ```shell
 python -m torch.distributed.launch --nproc_per_node 4 yolov7/train.py --device 0,1 --batch-size 8 --epochs 50 --data yolov7/data/AICUP.yaml --img 1280 1280 --cfg yolov7/cfg/training/yolov7-AICUP.yaml --weights 'pretrained/yolov7-e6e.pt' --name yolov7-AICUP --hyp data/hyp.scratch.custom.yaml
 ```
-跑完之後用tensorboard可視化 open in browser
+跑完之後用 tensorboard 可視化 open in browser
 ```shell
 tensorboard --logdir=<程式碼路徑>/AICUP_Baseline_BoT-SORT/runs/train/yolov7-AICUP<你的資料夾>
 ```
@@ -72,11 +69,9 @@ tensorboard --logdir=<程式碼路徑>/AICUP_Baseline_BoT-SORT/runs/train/yolov7
 ```shell
 bash tools/track_all_timestamps.sh --weights runs/train/yolov7-AICUP/weights/best.pt --source-dir /data/NAS/ComputeServer/slicepaste/AI_CUP/train/images/<timestamp> --device 0 --fast-reid-config fast_reid/configs/AICUP/bagtricks_R50-ibn.yml --fast-reid-weights logs/<資料夾>/bagtricks_R50-ibn/model_00<第幾個>.pth
 ```
-tracking結果路徑:
-	`<程式碼路徑>/AICUP_Baseline_BoT-SORT/runs/detect/<timestamp>`
+tracking結果路徑: `<程式碼路徑>/AICUP_Baseline_BoT-SORT/runs/detect/<timestamp>`
 
 到此步驟便可產生 Bot-SORT Tracking 的 txt
-
 
 
 # output評分
